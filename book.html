@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now - Cab Rental Service</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add your specific styles here */
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .booking-form input, .booking-form select, .booking-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .booking-form .button {
+            background-color: #ff6600;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .booking-form .button:hover {
+            background-color: #e55b00;
+        }
+
+        .total-cost {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>FS Cabs</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="booknow.html">Book Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Booking Form Section -->
+    <section class="booking-form">
+        <div class="container">
+            <h2>Book Your Car</h2>
+            <form id="bookingForm">
+                <input type="hidden" id="carType" name="carType">
+                <input type="hidden" id="carPrice" name="carPrice">
+
+                <label for="rentalDuration">Rental Duration (in hours):</label>
+                <input type="number" id="rentalDuration" name="rentalDuration" min="12" step="12" required>
+
+                <label for="pickupDate">Pickup Date:</label>
+                <input type="date" id="pickupDate" name="pickupDate" required>
+
+                <label for="pickupTime">Pickup Time:</label>
+                <input type="time" id="pickupTime" name="pickupTime" required>
+
+                <label for="pickupPlace">Pickup Place:</label>
+                <select id="pickupPlace" name="pickupPlace" required>
+                    <option value="" disabled selected>Select Pickup Place</option>
+                    <option value="Dabolim Airport">Dabolim Airport</option>
+                    <option value="Margao Railway Station">Margao Railway Station</option>
+                    <option value="Vasco Railway Station">Vasco Railway Station</option>
+                    <option value="Mopa Airport">Mopa Airport</option>
+                    <option value="Vasco Da Gama">Vasco Da Gama</option>
+                </select>
+
+                <label for="dropoffPlace">Dropoff Place:</label>
+                <select id="dropoffPlace" name="dropoffPlace" required>
+                    <option value="" disabled selected>Select Dropoff Place</option>
+                    <option value="Dabolim Airport">Dabolim Airport</option>
+                    <option value="Margao Railway Station">Margao Railway Station</option>
+                    <option value="Vasco Railway Station">Vasco Railway Station</option>
+                    <option value="Mopa Airport">Mopa Airport</option>
+                    <option value="Vasco Da Gama">Vasco Da Gama</option>
+                </select>
+
+                <label for="dropoffTime">Calculated Dropoff Time:</label>
+                <input type="text" id="dropoffTime" name="dropoffTime" readonly>
+
+                <div class="total-cost" id="totalCost">Total Cost: $0</div>
+
+                <button type="submit" class="button">Book a cab</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 FS Cabs | All Rights Reserved</p>
+            <div class="social-media">
+                <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript to handle the booking logic -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carType = urlParams.get('carType');
+    const carPrice = parseFloat(urlParams.get('carPrice'));
+
+    if (!carType || isNaN(carPrice)) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    document.getElementById('carType').value = carType;
+    document.getElementById('carPrice').value = carPrice;
+
+    document.querySelector('.booking-form h2').textContent = `Book Your ${carType}`;
+
+    const now = new Date();
+    const currentDate = now.toISOString().split('T')[0];
+    const currentTime = now.toTimeString().slice(0, 5);
+
+    const pickupDateInput = document.getElementById('pickupDate');
+    pickupDateInput.setAttribute('min', currentDate);
+    pickupDateInput.value = currentDate;
+
+    const pickupTimeInput = document.getElementById('pickupTime');
+    pickupDateInput.addEventListener('change', function() {
+        if (pickupDateInput.value === currentDate) {
+            pickupTimeInput.setAttribute('min', currentTime);
+            pickupTimeInput.value = currentTime;
+        } else {
+            pickupTimeInput.removeAttribute('min');
+        }
+    });
+
+    if (pickupDateInput.value === currentDate) {
+        pickupTimeInput.setAttribute('min', currentTime);
+        pickupTimeInput.value = currentTime;
+    }
+
+    // Listen to changes in pickup time and rental duration
+    document.getElementById('rentalDuration').addEventListener('input', function() {
+        const rentalHours = parseInt(this.value);
+        calculateDropoffTime(rentalHours, pickupTimeInput.value);
+        updateTotalCost(rentalHours);
+    });
+
+    pickupTimeInput.addEventListener('input', function() {
+        const rentalHours = parseInt(document.getElementById('rentalDuration').value);
+        if (!isNaN(rentalHours)) {
+            calculateDropoffTime(rentalHours, this.value);
+        }
+    });
+
+    function calculateDropoffTime(rentalHours, pickupTime) {
+        const [pickupHour, pickupMinute] = pickupTime.split(':').map(Number);
+        const pickupDateTime = new Date();
+        pickupDateTime.setHours(pickupHour, pickupMinute);
+
+        pickupDateTime.setHours(pickupDateTime.getHours() + rentalHours);
+
+        const dropoffTime = pickupDateTime.toTimeString().slice(0, 5);
+        document.getElementById('dropoffTime').value = dropoffTime;
+    }
+
+    function updateTotalCost(rentalHours) {
+        const rentalDays = Math.ceil(rentalHours / 12);
+        const totalCost = carPrice * rentalDays;
+        document.getElementById('totalCost').textContent = `Total Cost: $${totalCost}`;
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const rentalDuration = document.getElementById('rentalDuration').value;
+        const rentalDays = Math.ceil(rentalDuration / 12);
+        const pickupDate = document.getElementById('pickupDate').value;
+        const pickupTime = document.getElementById('pickupTime').value;
+        const pickupPlace = document.getElementById('pickupPlace').value;
+        const dropoffPlace = document.getElementById('dropoffPlace').value;
+        const dropoffTime = document.getElementById('dropoffTime').value;
+        const totalCost = document.getElementById('totalCost').textContent;
+
+        if (totalCost === "Total Cost: $0") {
+            alert("The minimum rental period is 12 hours. Please select a valid rental period.");
+            return;
+        }
+
+        const message = `Booking Details:\nCar Type: ${carType}\nRental Duration: ${rentalDuration} hours (${rentalDays} day(s))\nPickup Date: ${pickupDate}\nPickup Time: ${pickupTime}\nPickup Place: ${pickupPlace}\nDropoff Place: ${dropoffPlace}\nDropoff Time: ${dropoffTime}\nTotal Cost: ${totalCost}`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappNumber = "https://wa.me/+918600810148?text=" + encodedMessage;
+
+        window.location.href = whatsappNumber;
+    });
+});
+
+
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

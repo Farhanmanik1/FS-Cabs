@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now - FS Cabs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add your specific styles here */
+        .car-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .car-item {
+            flex: 1 1 calc(33.333% - 20px);
+            box-sizing: border-box;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative; /* To position the button */
+        }
+
+        .car-item img {
+            width: 100%;
+            height: 200px; /* Fixed height */
+            object-fit: cover; /* Ensures the image covers the entire area */
+            display: block;
+        }
+
+        .car-info {
+            padding: 15px;
+            text-align: center;
+            position: relative; /* Ensures the position of the button is relative to this container */
+        }
+
+        .car-info h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .car-info p {
+            margin: 5px 0 50px; /* Add bottom margin to create space for the button */
+            color: #555;
+        }
+
+        .car-info .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .filter {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .filter select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .book-now-btn {
+            position: absolute;
+            bottom: 15px; /* Adjust this value if necessary to move the button upwards or downwards */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .car-item:hover .book-now-btn {
+            display: block;
+        }
+
+	.floating-call-icon {
+    position: fixed;
+    bottom: 60px; /* Adjust this value to move the icon higher or lower */
+    right: 20px; /* Distance from the right */
+    background-color: #007bff; /* Background color of the icon */
+    border-radius: 50%; /* Circular icon */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it's on top of other elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-call-icon img {
+    width: 50px; /* Size of the icon */
+    height: 50px;
+}
+
+.floating-call-icon:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+	
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .car-item {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .car-item {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>FS Cabs</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="booknow.html">Book Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Book Now Section -->
+    <section class="book-now">
+        <div class="container">
+            <h2><b>Select your preferred car</b></h2>
+            
+            <!-- Filter Section -->
+            <div class="filter">
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                </select>
+            </div>
+
+            <!-- Car Grid Section -->
+            <div class="car-grid" id="car-grid">
+                <!-- Car Items arranged in ascending order of price -->
+                <div class="car-item" data-price="1100">
+                    <img src="https://imgk.timesnownews.com/story/1556022282-New_Maruti_Suzuki_Alto_800.jpg">
+                    <div class="car-info">
+                        <h3>Maruti Alto</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹1100 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Maruti%20Alto,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="1200">
+                    <img src="https://auto.economictimes.indiatimes.com/files/retail_files/santro-1664865849-prod-var.jpg">
+                    <div class="car-info">
+                        <h3>Hyundai Santro</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹1200 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Hyundai%20Santro,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="1300">
+                    <img src="https://th.bing.com/th/id/OIP.Kc7GWojWA74gjx9Y6EpStQHaEK?rs=1&pid=ImgDetMain">
+                    <div class="car-info">
+                        <h3>Wagon R</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹1300 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Wagon%20R,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="1400">
+                    <img src="https://th.bing.com/th/id/R.ed5b9abdb79832e3a0029359c49f7161?rik=JXgBEpc5ovG04A&riu=http%3a%2f%2f4.bp.blogspot.com%2f-r65zbXixQmc%2fUjNqBtYktiI%2fAAAAAAAAAWY%2fam5phumCHFA%2fs1600%2fi10-grand-motorzest-01.jpg&ehk=CVkOwHG3Ao5PtUzJYoNkDtreL6igPrvXRid%2f4BpIC3k%3d&risl=&pid=ImgRaw&r=0">
+                    <div class="car-info">
+                        <h3>i 10</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹1400 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20i%2010,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="1600">
+                    <img src="https://img.indianauto.com/2021/05/03/FJZsdGEY/maruti-dzire-three-quarter-front-19d8_wm.jpg">
+                    <div class="car-info">
+                        <h3>Maruti Dzire</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹1600 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Maruti%20Dzire,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="1800">
+                    <img src="https://th.bing.com/th/id/OIP.4U8L26-TqT5GZ6ijRixWkAHaJ4?pid=ImgDet&rs=1">
+                    <div class="car-info">
+                        <h3>Creta</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹1800 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Creta,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="2300">
+                    <img src="https://s1.cdn.autoevolution.com/images/news/gallery/all-new-suzuki-ertiga-debuts-in-indonesia_1.jpg">
+                    <div class="car-info">
+                        <h3>Ertiga</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹2300 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Ertiga,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+
+                <div class="car-item" data-price="4000">
+                    <img src="https://images.livemint.com/img/2022/09/24/1600x900/Mahindrathar_1664005874494_1664005874760_1664005874760.jpg">
+                    <div class="car-info">
+                        <h3>Thar</h3>
+                        <p>Minimum booking of <b>2</b> days atleast.</p>
+                        <p class="price">₹4000 per day</p>
+                    </div>
+                    <a href="https://wa.me/+917499457550?text=I%20want%20to%20book%20Thar,%20can%20you%20provide%20me%20with%20the%20details%20and%20pricing?" class="book-now-btn" target="_blank">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Floating Call Icon -->
+<a href="tel:+917499457550" class="floating-call-icon" aria-label="Call Us">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="Call Icon">
+</a>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 FS Cabs | All Rights Reserved</p>
+            <div class="social-media">
+                <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for sorting
+        document.getElementById('sort').addEventListener('change', function() {
+            const sortValue = this.value;
+            const carGrid = document.getElementById('car-grid');
+            const carItems = Array.from(carGrid.getElementsByClassName('car-item'));
+
+            carItems.sort((a, b) => {
+                const priceA = parseFloat(a.getAttribute('data-price'));
+                const priceB = parseFloat(b.getAttribute('data-price'));
+
+                if (sortValue === 'price-asc') {
+                    return priceA - priceB;
+                } else {
+                    return priceB - priceA;
+                }
+            });
+
+            carItems.forEach(item => carGrid.appendChild(item));
+        });
+
+        // JavaScript for hamburger menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
